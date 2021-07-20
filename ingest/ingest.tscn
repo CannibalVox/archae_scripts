@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/qodot/src/nodes/qodot_map.gd" type="Script" id=1]
+[ext_resource path="res://fgd/updated_qodot_fqd.tres" type="Resource" id=2]
+[ext_resource path="res://ingest/Ingest.gd" type="Script" id=3]
+
+[sub_resource type="SpatialMaterial" id=1]
+params_diffuse_mode = 1
+params_specular_mode = 2
+
+[node name="Spatial" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="QodotMap" type="Spatial" parent="."]
+script = ExtResource( 1 )
+map_file = ""
+inverse_scale_factor = 16.0
+entity_fgd = ExtResource( 2 )
+base_texture_dir = "res://textures"
+texture_file_extension = "tga"
+worldspawn_layers = [  ]
+brush_clip_texture = "special/clip"
+face_skip_texture = "special/skip"
+texture_wads = [  ]
+material_file_extension = "tres"
+default_material = SubResource( 1 )
+uv_unwrap_texel_size = 16.0
+print_profiling_data = false
+use_trenchbroom_group_hierarchy = true
+tree_attach_batch_size = 16
+set_owner_batch_size = 16
+
+[node name="BakedLightmap" type="BakedLightmap" parent="."]
+bounces = 1
+capture_enabled = false
+
+[connection signal="build_failed" from="QodotMap" to="." method="_on_QodotMap_build_failed"]
